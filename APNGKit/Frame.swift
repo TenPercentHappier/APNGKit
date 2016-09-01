@@ -71,8 +71,7 @@ struct Frame {
     }
     
     mutating func updateCGImageRef(width: Int, height: Int, bits: Int, scale: CGFloat, blend: Bool) {
-        
-        let provider = CGDataProviderCreateWithData(nil, bytes, length, nil)
+        let provider = CGDataProviderCreateWithData(UnsafeMutablePointer(nil), bytes, length, {_,_,_ in })!
         
         if let imageRef = CGImageCreate(width, height, bits, bits * 4, bytesInRow, CGColorSpaceCreateDeviceRGB(),
             [CGBitmapInfo.ByteOrder32Big, CGBitmapInfo(rawValue: blend ? CGImageAlphaInfo.Last.rawValue : CGImageAlphaInfo.PremultipliedLast.rawValue)],
